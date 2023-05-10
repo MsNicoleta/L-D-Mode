@@ -12,38 +12,46 @@ image1.src = `img/undraw_proud_coder_${color}.svg`;
 image2.src = `img/undraw_feeling_proud_${color}.svg`;
 image3.src = `img/undraw_conceptual_idea_${color}.svg`;
 }
-//Dark Mode Style
-function darkMode(){
-    nav.style.backgroundColor = 'rgba(0 0 0 / 50%)';
-    textBox.style.backgroundColor = 'rgba(255 255 255 / 50%)';
-    toggleIcon.children[0].textContent = 'Dark Mode';
-    toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
-    imageMode('dark');
-   
-    
 
-}
-//Light Mode Style
-function lightMode(){
-    nav.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-    textBox.style.backgroundColor = 'rgba(0 0 0  / 50%)';
-    toggleIcon.children[0].textContent = 'Light Mode';
+function setDarkLightMode(isDark){
+    nav.style.backgroundColor = isDark?'rgba(0 0 0 / 50%)': 'rgba(255, 255, 255, 0.9)' ;
+    textBox.style.backgroundColor = isDark? 'rgba(255 255 255 / 50%)' : 'rgba(0 0 0 / 50%)' ;
+    toggleIcon.children[0].textContent =  isDark? 'Dark Mode' : 'Light Mode';
+    isDark? toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon'):
     toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
-    imageMode('light');
+   isDark? imageMode('dark'): imageMode('light');
+}
+
+
+// //Dark Mode Style
+// function darkMode(){
+//     nav.style.backgroundColor = 'rgba(0 0 0 / 50%)';
+//     textBox.style.backgroundColor = 'rgba(255 255 255 / 50%)';
+//     toggleIcon.children[0].textContent = 'Dark Mode';
+//     toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
+//     imageMode('dark');
+// }
+// //Light Mode Style
+// function lightMode(){
+//     nav.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+//     textBox.style.backgroundColor = 'rgba(0 0 0  / 50%)';
+//     toggleIcon.children[0].textContent = 'Light Mode';
+//     toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
+//     imageMode('light');
         
 
-}
+// }
 
 // Switch theme dynamically
 function switchTheme(event){
     if (event.target.checked){
         document.documentElement.setAttribute('data-theme','dark');
         localStorage.setItem('data-theme', 'dark');
-        darkMode();
+        setDarkLightMode(true)
     }else{
         document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('data-theme', 'light');
-        lightMode();
+        localStorage.setItem('data-theme','light');
+        setDarkLightMode(false)
     }
 }
 
@@ -56,6 +64,6 @@ if (currentTheme){
     document.documentElement.setAttribute('data-theme',currentTheme);
     if (currentTheme === 'dark'){
         toggleSwitch.checked = true;
-        darkMode();
+        setDarkLightMode(true);
     }
 }
